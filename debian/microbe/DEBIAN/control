@@ -1,0 +1,11 @@
+Package: microbe
+Version: 0.0.1
+Section: user/multimedia
+Priority: optional
+Architecture: armel
+Depends: libqt4-opengl
+Installed-Size: 40
+Maintainer: Robert Irvin <android_808@hotmail.com>
+Description: An open source replacement for microb.
+ microbe is an attempt to replace microb using embedlite.
+Maemo-Display-Name: microbe
