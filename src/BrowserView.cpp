@@ -43,6 +43,10 @@ BrowserView::BrowserView(QWidget* parent) :
 
 void BrowserView::onInitialized()
 {
+    mMozView.loadFrameScript("chrome://embedlite/content/embedhelper.js");
+    mMozView.loadFrameScript("chrome://embedlite/content/SelectAsyncHelper.js");
+
+
     mMozView.load("www.google.com");
 }
 
@@ -77,17 +81,15 @@ void BrowserView::onRequestGLContext(bool& hasContext, QSize& viewPortSize)
                 //r = mapToScene(0, 0, ctx->device()->width(), ctx->device()->height());
                 //r = mMozView.mapRectToScene(r);
 
-                printf("View: %i, %i, ctx: %i, %i\n", view->width(), view->height(), ctx->device()->width(), ctx->device()->height());
+                //printf("View: %i, %i, ctx: %i, %i\n", view->width(), view->height(), ctx->device()->width(), ctx->device()->height());
                 //r = mapToScene(0, 0, ctx->device()->width(), ctx->device()->height());
                 QPolygonF r = mapFromScene(0, 0, ctx->device()->width(), ctx->device()->height());
                 viewPortSize = r.boundingRect().size().toSize();
 
-
-                //viewPortSize = QSize(1024,768);
                 //viewPortSize = r.size().toSize();
             }
             hasContext = true;
-            qDebug("viewPortSize %i %i\n", viewPortSize.width(), viewPortSize.height());
+            //qDebug("viewPortSize %i %i\n", viewPortSize.width(), viewPortSize.height());
             break;
         }
     }
@@ -95,8 +97,9 @@ void BrowserView::onRequestGLContext(bool& hasContext, QSize& viewPortSize)
 
 void BrowserView::resizeEvent(QResizeEvent *event)
 {
-//    if (scene())
-//        scene()->setSceneRect(QRect(QPoint(0, 0), event->size()));
+    //if (scene())
+    //    scene()->setSceneRect(QRect(QPoint(0, 0), event->size()));
+    mMozView.resize(event->size());
     QGraphicsView::resizeEvent(event);
 }
 
