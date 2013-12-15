@@ -31,7 +31,7 @@ BrowserWindow::BrowserWindow(QWidget *parent) :
     mBrowserView = new BrowserView(this);
     this->setCentralWidget(mBrowserView);    
 
-    //this->onOrientationChanged();
+    this->onOrientationChanged();
 }
 
 void BrowserWindow::setLandscapeLayout() {
