@@ -160,5 +160,4 @@ void MozWindowCreator::onInitialized()
     QStringList observers;
     observers << "embed:download" << "embed:prefs" << "embed:allprefs" << "clipboard:setdata" << "embed:logger" << "embed:search";
     context->addObservers(observers);
-
 }
