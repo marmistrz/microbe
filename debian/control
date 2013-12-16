@@ -1,5 +1,5 @@
 Source: microbe
-Section: user/multimedia
+Section: user/network
 Priority: optional
 Maintainer: Robert Irvin <android_808@hotmail.com>
 Build-Depends: debhelper (>= 5), libqt4-dev, libqt4-opengl-dev, libqjson-dev, libx11-dev
