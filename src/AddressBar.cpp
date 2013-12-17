@@ -28,6 +28,8 @@ void AddressBar::onURLChanged()
     if(view)
     {
         this->lineEdit()->setText(view->url().toEncoded());
+        // For long, obscure URL's (SessionID, Hash etc) its easier to see what site we are on.
+        this->lineEdit()->setCursorPosition(0);
     }
 }
 
