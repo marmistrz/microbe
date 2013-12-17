@@ -13,7 +13,7 @@
 #include <QGraphicsView>
 #include <QGraphicsScene>
 #include <QGLWidget>
-#include "qgraphicsmozview.h"
+#include "qtmozembed/qgraphicsmozview.h"
 
 
 BrowserWindow::BrowserWindow(QWidget *parent) :
