@@ -13,7 +13,7 @@ class BrowserWindow : public StackedWindow
     Q_OBJECT
 
 public:
-    explicit BrowserWindow(QWidget *parent = 0);
+    explicit BrowserWindow(const QString& url = "about:blank", QWidget *parent = 0);
 
 public Q_SLOTS:
     void toggleFullScreen();

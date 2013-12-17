@@ -2,8 +2,9 @@
 #include <QGLWidget>
 #include <QDebug>
 
-BrowserView::BrowserView(QWidget* parent) :
-    QGraphicsView(parent) 
+BrowserView::BrowserView(const QString& url, QWidget* parent) :
+    QGraphicsView(parent),
+    mStartURL(url)
 {
     setViewport(new QGLWidget());
     //setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Preferred);
@@ -39,15 +40,24 @@ BrowserView::BrowserView(QWidget* parent) :
     
     connect(&mMozView, SIGNAL(viewInitialized()), this, SLOT(onInitialized()));
     connect(&mMozView, SIGNAL(requestGLContextQGV(bool&,QSize&)), this, SLOT(onRequestGLContext(bool&,QSize&)));
+    
+    printf("Requested start page: %s\n", url.toUtf8().constData());
 }
 
 void BrowserView::onInitialized()
 {
     mMozView.loadFrameScript("chrome://embedlite/content/embedhelper.js");
     mMozView.loadFrameScript("chrome://embedlite/content/SelectAsyncHelper.js");
+    
+    QStringList msglisteners;
+    msglisteners << "embed:filepicker" << "embed:permissions" << "embed:select" << "embed:selectasync" \
+        << "embed:login" << "embed:find" << "chrome:linkadded" << "embed:alert" << "embed:confirm" \
+        << "embed:prompt" << "embed:auth" << "WebApps:PreInstall" << "WebApps:PostInstall" << "WebApps:Uninstall" \
+        << "WebApps:Open" << "Content:ContextMenu" << "Content:SelectionRange" << "Content:SelectionCopied";
+    mMozView.addMessageListeners(msglisteners);
 
 
-    mMozView.load("www.google.com");
+    mMozView.load(mStartURL);
 }
 
 static bool viewHasGLContext(QGraphicsView* view)

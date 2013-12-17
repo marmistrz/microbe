@@ -9,7 +9,7 @@ class BrowserView : public QGraphicsView
 {
     Q_OBJECT
 public:
-    explicit BrowserView (QWidget* parent = 0);
+    explicit BrowserView (const QString& url, QWidget* parent = 0);
 public Q_SLOTS:
     void onInitialized();
     void onRequestGLContext(bool& hasContext, QSize& viewPortSize);
@@ -19,6 +19,7 @@ protected:
 private:
     QGraphicsScene mScene;
     QGraphicsMozView mMozView;
+    QString mStartURL;
 };
 
 #endif //BrowserView_H

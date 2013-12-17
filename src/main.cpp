@@ -47,17 +47,17 @@ int main(int argc, char *argv[])
         app.installTranslator(&translator);
     }
  
-    QString urlstring;
+    QString urlstring("about:blank");
 
     QStringList arguments = app.arguments();
     for (int i = 0; i < arguments.count(); ++i) {
         QString parameter = arguments.at(i);
-        if (parameter == "-url") {
+        if (parameter == "-url" || parameter == "--url") {
             if (i + 1 >= arguments.count())
                 qFatal("-url requires an argument");
             urlstring = arguments.at(i + 1);
             i++;
-        } else if (parameter == "-help") {
+        } else if (parameter == "-help"  || parameter == "--help") {
             qDebug() << "EMail application";
             qDebug() << "-url          - url to load";
             exit(0);
@@ -65,7 +65,7 @@ int main(int argc, char *argv[])
     }
     
     MozWindowCreator winCreator(0, true, false);
-    BrowserWindow *view = winCreator.CreateNewWindow("www.google.com");
+    BrowserWindow *view = winCreator.CreateNewWindow(urlstring);
     winCreator.mWindowStack.append(view);
 
     DBusAdaptor* adaptor = new DBusAdaptor();

@@ -93,12 +93,9 @@ MozWindowCreator::bringToFront()
 BrowserWindow*
 MozWindowCreator::CreateNewWindow(const QString& url, quint32 *aUniqueID, quint32 aParentID)
 {
-    BrowserWindow *view = new BrowserWindow;
+    BrowserWindow *view = new BrowserWindow(url);
     
-/*    QUrl qml;
-    if (qmlstring.isEmpty())
-
-    // See NEMO#415 for an explanation of why this may be necessary.
+/*  // See NEMO#415 for an explanation of why this may be necessary.
     if (glwidget && !getenv("SWRENDER"))
         view->setViewport(new QGLWidget);
     else {
