@@ -23,12 +23,12 @@ BrowserWindow::BrowserWindow(const QString& url, QWidget *parent) :
     m_fullscreen(false)
 {    
     this->setWindowTitle("Microbe");
-    //this->setAttribute(Qt::WA_DeleteOnClose, false);
+    this->setAttribute(Qt::WA_DeleteOnClose, true);
 
     mBrowserView = new BrowserView(url, this);
     this->setCentralWidget(mBrowserView);    
 
-    mNavigationBar = new NavigationToolBar(this);
+    mNavigationBar = new NavigationToolBar(mBrowserView, this);
     this->addToolBar(mNavigationBar);
 
     this->onOrientationChanged();

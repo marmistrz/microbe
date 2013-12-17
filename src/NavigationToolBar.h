@@ -4,12 +4,14 @@
 #include "Enums.h"
 #include <QToolBar>
 
+class BrowserView;
+
 class NavigationToolBar : public QToolBar
 {
     Q_OBJECT
 
 public:
-    explicit NavigationToolBar(QWidget *parent = 0);
+    explicit NavigationToolBar(BrowserView* view, QWidget *parent = 0);
     ~NavigationToolBar() {}
     void setLandscapeLayout();
     void setPortraitLayout();

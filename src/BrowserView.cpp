@@ -44,6 +44,11 @@ BrowserView::BrowserView(const QString& url, QWidget* parent) :
     printf("Requested start page: %s\n", url.toUtf8().constData());
 }
 
+QGraphicsMozView* BrowserView::GetMozView(void)
+{
+    return &mMozView;
+}
+
 void BrowserView::onInitialized()
 {
     mMozView.loadFrameScript("chrome://embedlite/content/embedhelper.js");
@@ -105,10 +110,17 @@ void BrowserView::onRequestGLContext(bool& hasContext, QSize& viewPortSize)
     }
 }
 
+// Testing only, not used at the moment.
+void BrowserView::load(const QString& url)
+{
+    mMozView.load(url);
+}
+
 void BrowserView::resizeEvent(QResizeEvent *event)
 {
-    //if (scene())
-    //    scene()->setSceneRect(QRect(QPoint(0, 0), event->size()));
+//  Fixes resize issue but offsets clicks.
+//    if (scene())
+//        scene()->setSceneRect(QRect(QPoint(0, 0), event->size()));
     mMozView.resize(event->size());
     QGraphicsView::resizeEvent(event);
 }
