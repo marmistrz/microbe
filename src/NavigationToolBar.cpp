@@ -10,15 +10,20 @@
 NavigationToolBar::NavigationToolBar(BrowserView* view, QWidget *parent) :
     QToolBar(tr("Navigation Toolbar"), parent)
 {
+    QGraphicsMozView* moz = view->GetMozView();
+    
     this->setContextMenuPolicy(Qt::PreventContextMenu);
 
-	m_historyAction = this->addAction(QIcon::fromTheme("browser_history"),QString::null, parent, SLOT(showHistory()));
+	m_historyAction = this->addAction(QIcon::fromTheme("browser_history"),QString::null, moz, SLOT(goBack()));
 	m_historyAction->setEnabled(false);
+	connect(moz, SIGNAL(navigationHistoryChanged()), this, SLOT(onNavigationHistoryChanged()));
 	
 	m_addBookmarkAction = this->addAction(QIcon::fromTheme("general_add"),QString::null, parent, SLOT(showAddBookmarkDialog()));
 
     AddressBar* address = new AddressBar(this);
     m_addressAction = this->addWidget(address);
+    connect(address, SIGNAL(URLRequest(QString)), moz, SLOT(load(QString)));
+    connect(moz, SIGNAL(urlChanged()), address, SLOT(onURLChanged()));
 
 	m_stopAction = this->addAction(QIcon::fromTheme("general_stop"),QString::null, parent, SLOT(stopLoading()));
 	m_stopAction->setVisible(false);
@@ -26,11 +31,15 @@ NavigationToolBar::NavigationToolBar(BrowserView* view, QWidget *parent) :
     this->addAction(QIcon::fromTheme("general_mybookmarks_folder"),QString::null, parent, SLOT(showBookmarksWindow()));
 
     m_fullScreenAction = this->addAction(QIcon::fromTheme("general_fullsize"),QString::null, parent, SLOT(toggleFullScreen()));
-    
-    QGraphicsMozView* moz = view->GetMozView();
-    connect(address, SIGNAL(URLRequest(QString)), moz, SLOT(load(QString)));
-    connect(moz, SIGNAL(urlChanged()), address, SLOT(onURLChanged()));
+}
 
+void NavigationToolBar::onNavigationHistoryChanged()
+{
+    QGraphicsMozView* view = qobject_cast<QGraphicsMozView*>(QObject::sender());
+    if(view)
+    {
+        m_historyAction->setEnabled(view->canGoBack());
+    }
 }
 
 void NavigationToolBar::setLandscapeLayout() {

@@ -16,6 +16,9 @@ public:
     void setLandscapeLayout();
     void setPortraitLayout();
 
+public Q_SLOTS:
+    void onNavigationHistoryChanged();
+
 private:
     QAction *m_historyAction;
     QAction *m_addBookmarkAction;
