@@ -17,6 +17,7 @@ public:
     void setPortraitLayout();
 
 public Q_SLOTS:
+    void onLoadingChanged();
     void onNavigationHistoryChanged();
 
 private:

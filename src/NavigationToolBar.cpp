@@ -25,12 +25,22 @@ NavigationToolBar::NavigationToolBar(BrowserView* view, QWidget *parent) :
     connect(address, SIGNAL(URLRequest(QString)), moz, SLOT(load(QString)));
     connect(moz, SIGNAL(urlChanged()), address, SLOT(onURLChanged()));
 
-	m_stopAction = this->addAction(QIcon::fromTheme("general_stop"),QString::null, parent, SLOT(stopLoading()));
+	m_stopAction = this->addAction(QIcon::fromTheme("general_stop"),QString::null, moz, SLOT(stop()));
 	m_stopAction->setVisible(false);
+	connect(moz, SIGNAL(loadingChanged()), this, SLOT(onLoadingChanged()));
 
     this->addAction(QIcon::fromTheme("general_mybookmarks_folder"),QString::null, parent, SLOT(showBookmarksWindow()));
 
     m_fullScreenAction = this->addAction(QIcon::fromTheme("general_fullsize"),QString::null, parent, SLOT(toggleFullScreen()));
+}
+
+void NavigationToolBar::onLoadingChanged()
+{
+    QGraphicsMozView* view = qobject_cast<QGraphicsMozView*>(QObject::sender());
+    if(view)
+    {
+        m_stopAction->setVisible(view->loading());
+    }
 }
 
 void NavigationToolBar::onNavigationHistoryChanged()
