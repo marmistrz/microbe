@@ -18,6 +18,7 @@ public Q_SLOTS:
     void toggleFullScreen();
 
 private Q_SLOTS:
+    void onTitleChanged();
     void showSettingsDialog();
     void showAboutDialog();
     void showAddBookmarkDialog();

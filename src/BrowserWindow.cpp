@@ -32,6 +32,8 @@ BrowserWindow::BrowserWindow(const QString& url, QWidget *parent) :
     this->addToolBar(mNavigationBar);
 
     this->onOrientationChanged();
+    
+    connect(mBrowserView->GetMozView(), SIGNAL(titleChanged()), this, SLOT(onTitleChanged())); 
 }
 
 void BrowserWindow::setLandscapeLayout() {
@@ -73,7 +75,14 @@ void BrowserWindow::stopLoading() {
 //    window->show();
 }
 
-
+void BrowserWindow::onTitleChanged()
+{
+    QGraphicsMozView* view = qobject_cast<QGraphicsMozView*>(QObject::sender());
+    if(view)
+    {
+        this->setWindowTitle(view->title() == QString() ? "Microbe" : view->title());
+    }
+}
 
 void BrowserWindow::toggleFullScreen() {
     if(!m_fullscreen)
