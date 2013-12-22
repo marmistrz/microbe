@@ -3,8 +3,6 @@
 #include <QGraphicsObject>
 #include <QVariant>
 #include <QGLWidget>
-#include <QDebug>
-#include <QTimer>
 #include <QUrl>
 #include "qtmozembed/qmozcontext.h"
 
@@ -13,16 +11,10 @@ MozWindowCreator::MozWindowCreator(const QString& aQmlstring, const bool& aGlwid
     qmlstring = aQmlstring;
     glwidget = aGlwidget;
     mIsFullScreen = aIsFullScreen;
-    
-    if (!QMozContext::GetInstance()->initialized()) {
-        connect(QMozContext::GetInstance(), SIGNAL(onInitialized()), this, SLOT(onInitialized()));
-    } else {
-        QTimer::singleShot(0, this, SLOT(onInitialized()));
-    }
 }
 
 quint32
-MozWindowCreator::newWindowRequested(const QString& url, const unsigned& aParentID, QNewWindowResponse* response)
+MozWindowCreator::createView(const QString &url, const quint32 &aParentID)
 {
     QUrl newUrl;
     if (!url.contains(QString("://")) && !url.startsWith(QString("about:"))) {
@@ -31,7 +23,7 @@ MozWindowCreator::newWindowRequested(const QString& url, const unsigned& aParent
     else {
         newUrl = QUrl(url);
     }
-/*    QString newHost = newUrl.host();
+    QString newHost = newUrl.host();
     if (newHost.startsWith(QString("www."))) {
         newHost = newHost.right(newHost.length() - 5);
     }
@@ -39,7 +31,7 @@ MozWindowCreator::newWindowRequested(const QString& url, const unsigned& aParent
     if (newPath.endsWith(QString("/"))) {
         newPath = newPath.left(newPath.length() - 1);
     }
-    for (int i=0; i<mWindowStack.size(); i++) {
+/*    for (int i=0; i<mWindowStack.size(); i++) {
         QDeclarativeView* view = mWindowStack.at(i);
         QObject* item = view->rootObject()->findChild<QObject*>("mainScope");
         QDeclarativeMozView* mozview = item->findChild<QDeclarativeMozView*>("webViewport");
@@ -71,10 +63,7 @@ MozWindowCreator::newWindowRequested(const QString& url, const unsigned& aParent
         view->showFullScreen();
     else
         view->show();
-    if (response) {
-        response->setNewWindowID(uniqueID);
-    }
-    return 0;
+    return uniqueID;
 }
 
 void
@@ -123,38 +112,4 @@ MozWindowCreator::CreateNewWindow(const QString& url, quint32 *aUniqueID, quint3
 
 */
     return view;
-}
-
-
-void MozWindowCreator::onInitialized()
-{
-    qDebug("WindowCreator::onInitialized");
-    QMozContext* context = QMozContext::GetInstance();
-    context->setPref("extensions.logging.enabled", true);
-    context->setPref("extensions.strictCompatibility",false);
-    context->setPref("dom.experimental_forms", true);
-    context->setPref("xpinstall.whitelist.add", "addons.mozilla.org");
-    context->setPref("xpinstall.whitelist.add.180", "marketplace.firefox.com");
-    context->setPref("security.alternate_certificate_error_page", "certerror");
-    context->setPref("embedlite.azpc.handle.singletap", false);
-    context->setPref("embedlite.azpc.json.singletap", true);
-    context->setPref("embedlite.azpc.handle.longtap", false);
-    context->setPref("embedlite.azpc.json.longtap", true);
-    context->setPref("embedlite.azpc.json.viewport", true);
-    context->setPref("embedlite.select.list.async", true);
-    context->setPref("browser.ui.touch.left", 32);
-    context->setPref("browser.ui.touch.right", 32);
-    context->setPref("browser.ui.touch.top", 48);
-    context->setPref("browser.ui.touch.bottom", 16);
-    context->setPref("browser.ui.touch.weight.visited", 120);
-    context->setPref("browser.download.folderList", 2); // 0 - Desktop, 1 - Downloads, 2 - Custom
-    context->setPref("browser.download.useDownloadDir", false); // Invoke filepicker instead of immediate download to ~/Downloads
-    context->setPref("browser.download.manager.retention", 2);
-    context->setPref("browser.helperApps.deleteTempFileOnExit", false);
-    context->setPref("browser.download.manager.quitBehavior", 1);
-    context->setPref("keyword.enabled", true);
-    
-    QStringList observers;
-    observers << "embed:download" << "embed:prefs" << "embed:allprefs" << "clipboard:setdata" << "embed:logger" << "embed:search";
-    context->addObservers(observers);
 }

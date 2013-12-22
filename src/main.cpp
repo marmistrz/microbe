@@ -23,7 +23,7 @@
 #endif
 
 #define OBJECT_NAME "/"
-#define SERVICE_NAME "org.mozilla.mozembed"
+#define SERVICE_NAME "org.mozilla.microbe"
 
 int main(int argc, char *argv[])
 {
@@ -43,7 +43,7 @@ int main(int argc, char *argv[])
 
     if (!Settings::instance()->language().isEmpty()) {
         QTranslator translator;
-        translator.load(QString("/opt/cutetube/translations/cutetube_%1").arg(Settings::instance()->language()));
+        translator.load(QString("/opt/microbe/translations/microbe_%1").arg(Settings::instance()->language()));
         app.installTranslator(&translator);
     }
  

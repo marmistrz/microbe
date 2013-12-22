@@ -2,7 +2,6 @@
 #define BROWSERWINDOW_H
 
 #include "StackedWindow.h"
-#include "mozilla/embedlite/EmbedLiteView.h"
 
 class QAction;
 class BrowserView;
