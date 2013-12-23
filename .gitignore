@@ -12,10 +12,7 @@
 *.la
 *.a
 
-<<<<<<< HEAD
-*.*~
-
+# Custom Qt Creator settings
 *.pro.user
-=======
-*~
->>>>>>> parent/master
+
+*.*~
