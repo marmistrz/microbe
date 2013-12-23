@@ -13,25 +13,27 @@
 #include <QGraphicsView>
 #include <QGraphicsScene>
 #include <QGLWidget>
-#include "qgraphicsmozview.h"
+#include "qtmozembed/qgraphicsmozview.h"
 
 
-BrowserWindow::BrowserWindow(QWidget *parent) :
+BrowserWindow::BrowserWindow(const QString& url, QWidget *parent) :
     StackedWindow(parent),
     m_settingsAction(this->menuBar()->addAction(tr("Settings"), this, SLOT(showSettingsDialog()))),
     m_aboutAction(this->menuBar()->addAction(tr("About"), this, SLOT(showAboutDialog()))),
     m_fullscreen(false)
 {    
     this->setWindowTitle("Microbe");
-    //this->setAttribute(Qt::WA_DeleteOnClose, false);
+    this->setAttribute(Qt::WA_DeleteOnClose, true);
 
-    mNavigationBar = new NavigationToolBar(this);
-    this->addToolBar(mNavigationBar);
-    
-    mBrowserView = new BrowserView(this);
+    mBrowserView = new BrowserView(url, this);
     this->setCentralWidget(mBrowserView);    
 
+    mNavigationBar = new NavigationToolBar(mBrowserView, this);
+    this->addToolBar(mNavigationBar);
+
     this->onOrientationChanged();
+    
+    connect(mBrowserView->GetMozView(), SIGNAL(titleChanged()), this, SLOT(onTitleChanged())); 
 }
 
 void BrowserWindow::setLandscapeLayout() {
@@ -73,7 +75,14 @@ void BrowserWindow::stopLoading() {
 //    window->show();
 }
 
-
+void BrowserWindow::onTitleChanged()
+{
+    QGraphicsMozView* view = qobject_cast<QGraphicsMozView*>(QObject::sender());
+    if(view)
+    {
+        this->setWindowTitle(view->title() == QString() ? "Microbe" : view->title());
+    }
+}
 
 void BrowserWindow::toggleFullScreen() {
     if(!m_fullscreen)

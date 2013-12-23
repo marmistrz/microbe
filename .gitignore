@@ -12,6 +12,10 @@
 *.la
 *.a
 
+<<<<<<< HEAD
 *.*~
 
 *.pro.user
+=======
+*~
+>>>>>>> parent/master

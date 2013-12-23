@@ -25,6 +25,7 @@ public:
     static Session* instance();
 
 private Q_SLOTS:
+    void onInitialized();
     
 private:
     QNetworkConfigurationManager *m_ncm;

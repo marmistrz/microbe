@@ -2,7 +2,11 @@ Source: microbe
 Section: user/network
 Priority: optional
 Maintainer: Robert Irvin <android_808@hotmail.com>
+<<<<<<< HEAD
 Build-Depends: debhelper (>= 5), libqt4-dev, libqt4-opengl-dev, libqjson-dev, libx11-dev, libqtmozembed-dev, xulrunner-dev
+=======
+Build-Depends: debhelper (>= 5), libqt4-dev, libqt4-opengl-dev, libqjson-dev, libx11-dev
+>>>>>>> parent/master
 Standards-Version: 3.7.3
 
 Package: microbe

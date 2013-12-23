@@ -2,7 +2,6 @@
 #define BROWSERWINDOW_H
 
 #include "StackedWindow.h"
-#include "mozilla/embedlite/EmbedLiteView.h"
 
 class QAction;
 class BrowserView;
@@ -13,12 +12,13 @@ class BrowserWindow : public StackedWindow
     Q_OBJECT
 
 public:
-    explicit BrowserWindow(QWidget *parent = 0);
+    explicit BrowserWindow(const QString& url = "about:blank", QWidget *parent = 0);
 
 public Q_SLOTS:
     void toggleFullScreen();
 
 private Q_SLOTS:
+    void onTitleChanged();
     void showSettingsDialog();
     void showAboutDialog();
     void showAddBookmarkDialog();

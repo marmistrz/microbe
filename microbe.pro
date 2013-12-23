@@ -9,11 +9,11 @@ SOURCES = $$files(src/*.cpp)
 HEADERS = $$files(src/*.h)
 
 #QTMOZEMBED
-#SOURCES += $$files(src/qtmozembed/*.cpp)
-#HEADERS += $$files(src/qtmozembed/*.h)
+SOURCES += $$files(src/qtmozembed/*.cpp)
+HEADERS += $$files(src/qtmozembed/*.h)
 
 PKGCONFIG += QJson
-LIBS +=-lX11 -lqtembedwidget
+LIBS +=-lX11
 
 isEmpty(DEFAULT_COMPONENT_PATH) {
   DEFINES += DEFAULT_COMPONENTS_PATH=\"\\\"/usr/lib/mozembedlite/\\\"\"

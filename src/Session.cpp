@@ -7,8 +7,10 @@
 #ifdef Q_WS_MAEMO_5
 //#include "windowstack.h"
 #endif
+#include <QDebug>
 #include <QNetworkConfigurationManager>
 #include <QNetworkAccessManager>
+#include <QTimer>
 
 Session* sessionInstance = 0;
 
@@ -33,7 +35,12 @@ Session::Session(QObject *parent) :
 //    m_transferManager->setNetworkAccessManager(this->networkAccessManager());
     m_settings->restoreSettings();
 //    m_transferManager->restoreStoredDownloads();
-    
+
+    if (!QMozContext::GetInstance()->initialized()) {
+        connect(QMozContext::GetInstance(), SIGNAL(onInitialized()), this, SLOT(onInitialized()));
+    } else {
+        QTimer::singleShot(0, this, SLOT(onInitialized()));
+    }    
 }
 
 Session::~Session() {
@@ -43,5 +50,39 @@ Session::~Session() {
 
 Session* Session::instance() {
     return sessionInstance;
+}
+
+void Session::onInitialized()
+{
+    qDebug("Session::onInitialized");
+    m_context->setPref("extensions.logging.enabled", true);
+    m_context->setPref("extensions.strictCompatibility",false);
+    m_context->setPref("dom.experimental_forms", true);
+    m_context->setPref("xpinstall.whitelist.add", "addons.mozilla.org");
+    m_context->setPref("xpinstall.whitelist.add.180", "marketplace.firefox.com");
+    m_context->setPref("security.alternate_certificate_error_page", "certerror");
+    m_context->setPref("embedlite.azpc.handle.singletap", false);
+    m_context->setPref("embedlite.azpc.json.singletap", true);
+    m_context->setPref("embedlite.azpc.handle.longtap", false);
+    m_context->setPref("embedlite.azpc.json.longtap", true);
+    m_context->setPref("embedlite.azpc.json.viewport", true);
+    m_context->setPref("embedlite.select.list.async", true);
+    m_context->setPref("browser.ui.touch.left", 32);
+    m_context->setPref("browser.ui.touch.right", 32);
+    m_context->setPref("browser.ui.touch.top", 48);
+    m_context->setPref("browser.ui.touch.bottom", 16);
+    m_context->setPref("browser.ui.touch.weight.visited", 120);
+    m_context->setPref("browser.download.folderList", 2); // 0 - Desktop, 1 - Downloads, 2 - Custom
+    m_context->setPref("browser.download.useDownloadDir", false); // Invoke filepicker instead of immediate download to ~/Downloads
+    m_context->setPref("browser.download.manager.retention", 2);
+    m_context->setPref("browser.helperApps.deleteTempFileOnExit", false);
+    m_context->setPref("browser.download.manager.quitBehavior", 1);
+    m_context->setPref("keyword.enabled", true);
+    // Params being tested:
+    //m_context->setPref("layers.progressive-paint", false);
+    
+    QStringList observers;
+    observers << "embed:download" << "embed:prefs" << "embed:allprefs" << "clipboard:setdata" << "embed:logger" << "embed:search";
+    m_context->addObservers(observers);
 }
 

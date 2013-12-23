@@ -1,6 +1,6 @@
 Package: microbe
 Version: 0.0.1
-Section: user/multimedia
+Section: user/network
 Priority: optional
 Architecture: armel
 Depends: libqt4-opengl
