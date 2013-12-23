@@ -9,11 +9,11 @@ SOURCES = $$files(src/*.cpp)
 HEADERS = $$files(src/*.h)
 
 #QTMOZEMBED
-SOURCES += $$files(src/qtmozembed/*.cpp)
-HEADERS += $$files(src/qtmozembed/*.h)
+#SOURCES += $$files(src/qtmozembed/*.cpp)
+#HEADERS += $$files(src/qtmozembed/*.h)
 
 PKGCONFIG += QJson
-LIBS +=-lX11
+LIBS +=-lX11 -lqtembedwidget
 
 isEmpty(DEFAULT_COMPONENT_PATH) {
   DEFINES += DEFAULT_COMPONENTS_PATH=\"\\\"/usr/lib/mozembedlite/\\\"\"
@@ -45,7 +45,7 @@ maemo5 {
 #    dbus_interface.files += dbus/com.maemo.myPlayer.xml
 #    dbus_interface.path = /usr/share/dbus-1/interfaces
 
-#    target.path = /home/user/MyDocs/myPlayer
+    target.path = /opt/microbe/bin/
 
 #    INSTALLS += translations desktopfile icon dbus_service dbus_interface
 }
