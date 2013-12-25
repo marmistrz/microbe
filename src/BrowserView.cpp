@@ -39,6 +39,7 @@ BrowserView::BrowserView(const QString& url, QWidget* parent) :
     mScene.addItem(&mMozView);
     
     connect(&mMozView, SIGNAL(viewInitialized()), this, SLOT(onInitialized()));
+    connect(&mMozView, SIGNAL(recvAsyncMessage(const QString, const QVariant)), this, SLOT(onRecvAsyncMessage(const QString, const QVariant)));
     connect(&mMozView, SIGNAL(requestGLContextQGV(bool&,QSize&)), this, SLOT(onRequestGLContext(bool&,QSize&)));
     
     printf("Requested start page: %s\n", url.toUtf8().constData());
@@ -76,6 +77,16 @@ static bool viewHasGLContext(QGraphicsView* view)
         }
     }
     return false;
+}
+
+void BrowserView::onRecvAsyncMessage(const QString message, const QVariant data)
+{
+    QVariantMap tmp = data.toMap();
+
+    if(message == "embed:alert")
+    {
+        qDebug() << "onAlert: title: " << tmp["title"].toString() << ", msg: " << tmp["text"].toString() << ", winid: " << tmp["winid"].toString();
+    }
 }
 
 void BrowserView::onRequestGLContext(bool& hasContext, QSize& viewPortSize)
