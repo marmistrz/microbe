@@ -90,14 +90,11 @@ int main(int argc, char *argv[])
         return 0;
     }
 
-
     view->show();
 
     qDebug() << "Starting Application!!!";
 
-    QObject::connect(QMozContext::GetInstance(),
-                     SIGNAL(newWindowRequested(const QString&, const unsigned&, QNewWindowResponse*)),
-                     &winCreator, SLOT(newWindowRequested(const QString&, const unsigned&, QNewWindowResponse*)));
+    QMozContext::GetInstance()->setViewCreator(&winCreator);
 
     QString componentPath(DEFAULT_COMPONENTS_PATH);
     qDebug() << "Load components from:" << componentPath + QString("/components") + QString("/EmbedLiteBinComponents.manifest");
@@ -118,5 +115,9 @@ int main(int argc, char *argv[])
 
     QObject::connect(&app, SIGNAL(aboutToQuit()), Session::instance(), SLOT(deleteLater()));
 
-    return app.exec();
+    int retval = app.exec();
+    qDebug() << "Exiting from Application!!!";
+    QDBusConnection::sessionBus().unregisterObject(OBJECT_NAME);
+    QDBusConnection::sessionBus().unregisterService(SERVICE_NAME);
+    return retval;
 }
