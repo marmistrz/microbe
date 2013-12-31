@@ -30,11 +30,11 @@ void AlertDialog::setLandscapeLayout() {
     //mButtonBox->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 
     if (mGrid->isEmpty()) {
-        mGrid->addWidget(mMessage, 0, 0);
+        mGrid->addWidget(mMessage, 0, 0, Qt::AlignHCenter);
         mGrid->addWidget(mButtonBox, 0, 1, Qt::AlignBottom);
     }
     else {
-        mGrid->setAlignment(mMessage, Qt::AlignBottom);
+        mGrid->setAlignment(mMessage, Qt::AlignHCenter);
         mGrid->removeWidget(mButtonBox);
         mGrid->addWidget(mButtonBox, 0, 1, Qt::AlignBottom);
     }
