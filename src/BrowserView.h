@@ -13,6 +13,7 @@ public:
     QGraphicsMozView* GetMozView(void);
 public Q_SLOTS:
     void onInitialized();
+    void onRecvAsyncMessage(const QString message, const QVariant data);
     void onRequestGLContext(bool& hasContext, QSize& viewPortSize);
     void load(const QString& url);
 protected:

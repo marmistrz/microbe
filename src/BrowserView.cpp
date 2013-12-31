@@ -1,6 +1,10 @@
 #include "BrowserView.h"
+#include "dialogues/AlertDialog.h"
 #include <QGLWidget>
 #include <QDebug>
+
+#include <qjson/serializer.h>
+#include <qjson/parser.h>
 
 BrowserView::BrowserView(const QString& url, QWidget* parent) :
     QGraphicsView(parent),
@@ -38,7 +42,10 @@ BrowserView::BrowserView(const QString& url, QWidget* parent) :
     //mScene.setSceneRect(0,0,width(),height());
     mScene.addItem(&mMozView);
     
+    mMozView.setInputMethodHints(Qt::ImhNoAutoUppercase);
+    
     connect(&mMozView, SIGNAL(viewInitialized()), this, SLOT(onInitialized()));
+    connect(&mMozView, SIGNAL(recvAsyncMessage(const QString, const QVariant)), this, SLOT(onRecvAsyncMessage(const QString, const QVariant)));
     connect(&mMozView, SIGNAL(requestGLContextQGV(bool&,QSize&)), this, SLOT(onRequestGLContext(bool&,QSize&)));
     
     printf("Requested start page: %s\n", url.toUtf8().constData());
@@ -76,6 +83,18 @@ static bool viewHasGLContext(QGraphicsView* view)
         }
     }
     return false;
+}
+
+void BrowserView::onRecvAsyncMessage(const QString message, const QVariant data)
+{
+    QVariantMap tmp = data.toMap();
+
+    if(message == "embed:alert")
+    {
+        qDebug() << "onAlert: title: " << tmp["title"].toString() << ", msg: " << tmp["text"].toString() << ", winid: " << tmp["winid"].toString();
+        AlertDialog* alertDlg = new AlertDialog(tmp["title"].toString(), tmp["text"].toString(), this);
+        alertDlg->exec();
+    }
 }
 
 void BrowserView::onRequestGLContext(bool& hasContext, QSize& viewPortSize)
