@@ -1,6 +1,10 @@
 #include "BrowserView.h"
+#include "dialogues/AlertDialog.h"
 #include <QGLWidget>
 #include <QDebug>
+
+#include <qjson/serializer.h>
+#include <qjson/parser.h>
 
 BrowserView::BrowserView(const QString& url, QWidget* parent) :
     QGraphicsView(parent),
@@ -37,6 +41,8 @@ BrowserView::BrowserView(const QString& url, QWidget* parent) :
     
     //mScene.setSceneRect(0,0,width(),height());
     mScene.addItem(&mMozView);
+    
+    mMozView.setInputMethodHints(Qt::ImhNoAutoUppercase);
     
     connect(&mMozView, SIGNAL(viewInitialized()), this, SLOT(onInitialized()));
     connect(&mMozView, SIGNAL(recvAsyncMessage(const QString, const QVariant)), this, SLOT(onRecvAsyncMessage(const QString, const QVariant)));
@@ -86,6 +92,8 @@ void BrowserView::onRecvAsyncMessage(const QString message, const QVariant data)
     if(message == "embed:alert")
     {
         qDebug() << "onAlert: title: " << tmp["title"].toString() << ", msg: " << tmp["text"].toString() << ", winid: " << tmp["winid"].toString();
+        AlertDialog* alertDlg = new AlertDialog(tmp["title"].toString(), tmp["text"].toString(), this);
+        alertDlg->exec();
     }
 }
 
