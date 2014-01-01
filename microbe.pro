@@ -8,6 +8,10 @@ INSTALLS += target
 SOURCES = $$files(src/*.cpp)
 HEADERS = $$files(src/*.h)
 
+# Dialogue Boxes
+SOURCES += $$files(src/dialogues/*.cpp)
+HEADERS += $$files(src/dialogues/*.h)
+
 #QTMOZEMBED
 SOURCES += $$files(src/qtmozembed/*.cpp)
 HEADERS += $$files(src/qtmozembed/*.h)
