@@ -39,7 +39,6 @@ public Q_SLOTS:
 
 private:
 
-
 private Q_SLOTS:
 
 Q_SIGNALS:

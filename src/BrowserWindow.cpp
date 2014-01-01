@@ -15,6 +15,7 @@
 #include <QGLWidget>
 #include "qtmozembed/qgraphicsmozview.h"
 
+#include "SettingsDialog.h"
 
 BrowserWindow::BrowserWindow(const QString& url, QWidget *parent) :
     StackedWindow(parent),
@@ -45,8 +46,8 @@ void BrowserWindow::setPortraitLayout() {
 }
 
 void BrowserWindow::showSettingsDialog() {
-//    SettingsDialog *dialog = new SettingsDialog(this);
-//    dialog->open();
+    SettingsDialog *dialog = new SettingsDialog(this);
+    dialog->open();
 }
 
 void BrowserWindow::showAboutDialog() {
