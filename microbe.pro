@@ -12,6 +12,10 @@ HEADERS = $$files(src/*.h) \
     src/dialogues/AbstractDialog.h \
     src/dialogues/AlertDialog.h
 
+# Dialogue Boxes
+SOURCES += $$files(src/dialogues/*.cpp)
+HEADERS += $$files(src/dialogues/*.h)
+
 #QTMOZEMBED
 SOURCES += $$files(src/qtmozembed/*.cpp)
 HEADERS += $$files(src/qtmozembed/*.h)
