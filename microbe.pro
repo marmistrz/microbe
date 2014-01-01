@@ -6,11 +6,9 @@ CONFIG += link_pkgconfig
 INSTALLS += target
 
 SOURCES = $$files(src/*.cpp) \
-    src/SettingsDialog.cpp \
     src/dialogues/AbstractDialog.cpp \
     src/dialogues/AlertDialog.cpp
 HEADERS = $$files(src/*.h) \
-    src/SettingsDialog.h \
     src/dialogues/AbstractDialog.h \
     src/dialogues/AlertDialog.h
 
