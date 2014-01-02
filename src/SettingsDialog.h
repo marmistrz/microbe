@@ -1,16 +1,24 @@
 #ifndef SETTINGSDIALOG_H
 #define SETTINGSDIALOG_H
 
-#include "dialogues/AbstractDialog.h"
 #include <QBoxLayout>
+#include <QMaemo5ValueButton>
+
+#include "dialogues/AbstractDialog.h"
+#include "qtmozembed/qmozcontext.h"
 
 class SettingsDialog : public AbstractDialog
 {
     Q_OBJECT
 public:
     explicit SettingsDialog(QWidget *parent = 0);
+    QString
 protected:
     QVBoxLayout * mainLayout;
+    QMaemo5ValueButton * searchEngineButton;
+    QMozContext * MozContext;
+public slots:
+    on_MozContext_recvObserve(const QString message, const QVariant data);
 
 };
 

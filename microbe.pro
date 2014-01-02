@@ -1,5 +1,5 @@
 TEMPLATE = app
-QT += network sql opengl dbus gui
+QT += network sql opengl dbus gui maemo5
 TARGET = microbe
 CONFIG += link_pkgconfig
 
