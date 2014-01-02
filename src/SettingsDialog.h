@@ -12,12 +12,11 @@ class SettingsDialog : public AbstractDialog
     Q_OBJECT
 public:
     explicit SettingsDialog(QWidget *parent = 0);
-    QString
 protected:
     QVBoxLayout * mainLayout;
     QMaemo5ValueButton * searchEngineButton;
     QMozContext * MozContext;
-public slots:
+public Q_SLOTS:
     on_MozContext_recvObserve(const QString message, const QVariant data);
 
 };
