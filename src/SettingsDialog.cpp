@@ -1,9 +1,11 @@
 #include "SettingsDialog.h"
-#include <QPushButton>
+#include <QDebug>
 
 SettingsDialog::SettingsDialog(QWidget *parent) :
     AbstractDialog(parent)
 {
+    MozContext = QMozContext::GetInstance();
+
     mainLayout = new QVBoxLayout;
 
     searchEngineButton = new QMaemo5ValueButton("Selected search engine");
@@ -12,8 +14,12 @@ SettingsDialog::SettingsDialog(QWidget *parent) :
     setLayout(mainLayout);
 }
 
-SettingsDialog::on_MozContext_recvObserve(const QString message, const QVariant data)
+void SettingsDialog::on_MozContext_recvObserve(const QString message, const QVariant data)
 {
+    QVariantMap qvmap = data.toMap(); // Convert the Json data to a map
+    qDebug() << "==========================================================";
+    qDebug() << qvmap;
+    qDebug() << "==========================================================";
     if (message == "embed:prefs")
     {
         //TODO what now?

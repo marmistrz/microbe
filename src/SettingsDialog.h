@@ -17,7 +17,7 @@ protected:
     QMaemo5ValueButton * searchEngineButton;
     QMozContext * MozContext;
 public Q_SLOTS:
-    on_MozContext_recvObserve(const QString message, const QVariant data);
+    void on_MozContext_recvObserve(const QString message, const QVariant data);
 
 };
 
