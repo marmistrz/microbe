@@ -6,6 +6,7 @@
 #include <QStringList>
 #include <QSet>
 #include <qplatformdefs.h>
+#include "qtmozembed/qmozcontext.h"
 
 class QNetworkProxy;
 class QAuthenticator;
@@ -23,6 +24,8 @@ class Settings : public QSettings
                WRITE setScreenOrientation
                NOTIFY screenOrientationChanged)
 
+    Q_PROPERTY(QString searchEngine READ searchEngine WRITE setSearchEngine) //NOTIFY searchEngineChanged)
+
 public:
     explicit Settings(QObject *parent = 0);
     ~Settings();
@@ -30,12 +33,14 @@ public:
     inline ScreenOrientation::Orientation screenOrientation() const { return m_orientation; }
 
     static Settings* instance();
-
 public Q_SLOTS:
     void saveSettings();
     void restoreSettings();
     void setLanguage(const QString &lang);
     void setScreenOrientation(ScreenOrientation::Orientation orientation);
+    void onRecvObserve(const QString message, const QVariant data);
+    void setSearchEngine(const QString engine) {/*FIXME*/}
+    QString searchEngine() const {return m_searchEngine;}
 
 private:
 
@@ -45,9 +50,13 @@ Q_SIGNALS:
     void languageChanged(const QString &language);
     void screenOrientationChanged(ScreenOrientation::Orientation orientation);
 
+protected:
+    QMozContext * MozContext;
+
 private:
     QString m_language;
     ScreenOrientation::Orientation m_orientation;
+    QString m_searchEngine;
 };
 
 #endif // SETTINGS_H

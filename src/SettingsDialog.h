@@ -5,7 +5,7 @@
 #include <QMaemo5ValueButton>
 
 #include "dialogues/AbstractDialog.h"
-#include "qtmozembed/qmozcontext.h"
+#include "Settings.h"
 
 class SettingsDialog : public AbstractDialog
 {
@@ -15,9 +15,7 @@ public:
 protected:
     QVBoxLayout * mainLayout;
     QMaemo5ValueButton * searchEngineButton;
-    QMozContext * MozContext;
-public Q_SLOTS:
-    void on_MozContext_recvObserve(const QString message, const QVariant data);
+    Settings * m_settings;
 
 };
 

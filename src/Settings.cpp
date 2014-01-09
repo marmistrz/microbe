@@ -1,6 +1,7 @@
 #include "Settings.h"
 #include <QDir>
 #include <QDesktopServices>
+#include <QDebug>
 
 Settings* settingsInstance = 0;
 
@@ -12,6 +13,9 @@ Settings::Settings(QObject *parent) :
     if (!settingsInstance) {
         settingsInstance = this;
     }
+
+    MozContext = QMozContext::GetInstance();
+    connect(MozContext, SIGNAL(recvObserve(QString,QVariant)), this, SLOT(onRecvObserve(QString,QVariant)));
 }
 
 Settings::~Settings() {
@@ -47,6 +51,36 @@ void Settings::setScreenOrientation(ScreenOrientation::Orientation orientation) 
     if (orientation != this->screenOrientation()) {
         m_orientation = orientation;
         Q_EMIT screenOrientationChanged(orientation);
+    }
+}
+
+void Settings::onRecvObserve(const QString message, const QVariant data)
+{
+    QVariantMap datamap = data.toMap(); // Convert the Json data to a map
+    qDebug() << "==========================================================";
+    qDebug() << datamap;
+    qDebug() << "==========================================================";
+//    abort();
+    if (message == "embed:prefs")
+    {
+        //TODO what now?
+    }
+    else if (message == "embed:search")
+    {
+        QString msg = datamap["msg"].toString();
+        if (msg == "init")
+        {
+            QVariant engine = datamap["defaultEngine"];
+            if (!engine.isNull())
+            {
+                m_searchEngine = engine.toString();
+            }
+        }
+        else if (msg == "pluginslist")
+        {
+            // TODO what now?
+        }
+
     }
 }
 
