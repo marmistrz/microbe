@@ -1,5 +1,5 @@
 TEMPLATE = app
-QT += network sql opengl dbus gui
+QT += network sql opengl dbus gui maemo5
 TARGET = microbe
 CONFIG += link_pkgconfig
 
@@ -49,7 +49,7 @@ maemo5 {
 #    dbus_interface.files += dbus/com.maemo.myPlayer.xml
 #    dbus_interface.path = /usr/share/dbus-1/interfaces
 
-#    target.path = /home/user/MyDocs/myPlayer
+    target.path = /opt/microbe/bin/
 
 #    INSTALLS += translations desktopfile icon dbus_service dbus_interface
 }
@@ -99,4 +99,6 @@ DEFINES += BUILD_GRE_HOME=\"\\\"$$BIN_DIR\\\"\"
 *-g++*: QMAKE_CXXFLAGS += -Wno-variadic-macros
 *-g++*: QMAKE_CXXFLAGS += -Wno-long-long
 *-g++*: QMAKE_CXXFLAGS += -Wno-psabi
+
+FORMS +=
 
