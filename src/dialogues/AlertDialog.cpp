@@ -20,6 +20,8 @@ AlertDialog::AlertDialog(const QString& title, const QString& message, QWidget *
     
     mMessage->setText(message);
     mMessage->setWordWrap(true);
+    
+    mOkButton->setDefault(true);
     this->connect(mOkButton, SIGNAL(clicked()), this, SLOT(accept()));
 
     this->onOrientationChanged();
