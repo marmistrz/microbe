@@ -22,7 +22,7 @@ ConfirmationDialog::ConfirmationDialog(const QString& title, const QString& mess
     mMessage->setText(message);
     mMessage->setWordWrap(true);
     
-    mOkButton->setDefault();
+    mOkButton->setDefault(true);
     this->connect(mOkButton, SIGNAL(clicked()), this, SLOT(accept()));
     this->connect(mCancelButton, SIGNAL(clicked()), this, SLOT(reject()));
 
