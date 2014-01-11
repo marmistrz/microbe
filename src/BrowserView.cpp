@@ -68,7 +68,6 @@ void BrowserView::onInitialized()
         << "WebApps:Open" << "Content:ContextMenu" << "Content:SelectionRange" << "Content:SelectionCopied";
     mMozView.addMessageListeners(msglisteners);
 
-
     mMozView.load(mStartURL);
 }
 
