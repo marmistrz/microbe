@@ -44,7 +44,7 @@ MemoryCacheSizeModel::MemoryCacheSizeModel(QObject *parent) :
     this->addItem(tr("5 MB"), 5);
     this->addItem(tr("Off"), 0);
 
-    emit countChanged(this->rowCount());
+    Q_EMIT countChanged(this->rowCount());
 }
 
 VolumeKeyActionModel::VolumeKeyActionModel(QObject *parent) :
@@ -53,7 +53,7 @@ VolumeKeyActionModel::VolumeKeyActionModel(QObject *parent) :
     this->addItem(tr("Zooming"), 0);
     this->addItem(tr("Volume"), 1);
 
-    emit countChanged(this->rowCount());
+    Q_EMIT countChanged(this->rowCount());
 }
 
 ScreenOrientationModel::ScreenOrientationModel(QObject *parent) :
@@ -63,7 +63,7 @@ ScreenOrientationModel::ScreenOrientationModel(QObject *parent) :
     this->addItem(tr("Portrait"), ScreenOrientation::LockPortrait);
     this->addItem(tr("Landscape"), ScreenOrientation::LockLandscape);
 
-    emit countChanged(this->rowCount());
+    Q_EMIT countChanged(this->rowCount());
 }
 
 PopUpActionModel::PopUpActionModel(QObject *parent) :
@@ -73,7 +73,7 @@ PopUpActionModel::PopUpActionModel(QObject *parent) :
     this->addItem(tr("Only requested"), 1);
     this->addItem(tr("Never"), 2);
 
-    emit countChanged(this->rowCount());
+    Q_EMIT countChanged(this->rowCount());
 }
 
 CookieActionModel::CookieActionModel(QObject *parent) :
@@ -83,5 +83,5 @@ CookieActionModel::CookieActionModel(QObject *parent) :
     this->addItem(tr("Ask first"), 1);
     this->addItem(tr("Never"), 2);
 
-    emit countChanged(this->rowCount());
+    Q_EMIT countChanged(this->rowCount());
 }

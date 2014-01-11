@@ -16,10 +16,10 @@ public:
     void setValue(ScreenOrientation::Orientation value);
     ScreenOrientation::Orientation currentValue();
 
-private slots:
+private Q_SLOTS:
     void onSelected();
 
-signals:
+Q_SIGNALS:
     void valueChanged(ScreenOrientation::Orientation value);
 
 private:

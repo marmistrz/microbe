@@ -37,5 +37,5 @@ ScreenOrientation::Orientation ScreenOrientationSelector::currentValue() {
 }
 
 void ScreenOrientationSelector::onSelected() {
-    emit valueChanged(this->currentValue());
+    Q_EMIT valueChanged(this->currentValue());
 }

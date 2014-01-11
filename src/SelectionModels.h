@@ -32,7 +32,7 @@ class MemoryCacheSizeModel : public SelectionModel
 public:
     explicit MemoryCacheSizeModel(QObject *parent = 0);
 
-signals:
+Q_SIGNALS:
     void countChanged(int count);
 };
 
@@ -47,7 +47,7 @@ class VolumeKeyActionModel : public SelectionModel
 public:
     explicit VolumeKeyActionModel(QObject *parent = 0);
 
-signals:
+Q_SIGNALS:
     void countChanged(int count);
 };
 
@@ -62,7 +62,7 @@ class ScreenOrientationModel : public SelectionModel
 public:
     explicit ScreenOrientationModel(QObject *parent = 0);
 
-signals:
+Q_SIGNALS:
     void countChanged(int count);
 };
 
@@ -77,7 +77,7 @@ class PopUpActionModel : public SelectionModel
 public:
     explicit PopUpActionModel(QObject *parent = 0);
 
-signals:
+Q_SIGNALS:
     void countChanged(int count);
 };
 
@@ -92,7 +92,7 @@ class CookieActionModel : public SelectionModel
 public:
     explicit CookieActionModel(QObject *parent = 0);
 
-signals:
+Q_SIGNALS:
     void countChanged(int count);
 };
 
