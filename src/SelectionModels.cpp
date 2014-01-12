@@ -34,6 +34,15 @@ void SelectionModel::addItem(const QString &name, const QVariant &value) {
     this->appendRow(item);
 }
 
+LanguageModel::LanguageModel(QObject *parent) :
+    SelectionModel(parent)
+{
+    this->addItem(tr("All languages"), "all");
+    this->addItem(tr("English"), "en");
+    
+    Q_EMIT countChanged(this->rowCount());
+}
+
 MemoryCacheSizeModel::MemoryCacheSizeModel(QObject *parent) :
     SelectionModel(parent)
 {

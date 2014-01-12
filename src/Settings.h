@@ -29,8 +29,10 @@ class Settings : public QSettings
 public:
     explicit Settings(QObject *parent = 0);
     ~Settings();
-    inline QString language() const { return m_language; }
-    inline ScreenOrientation::Orientation screenOrientation() const { return m_orientation; }
+    
+    inline signed int memoryCacheSize() const { return -1; } /*FIXME*/
+    inline QString language() const { return mLanguage; }
+    inline ScreenOrientation::Orientation screenOrientation() const { return mOrientation; }
 
     static Settings* instance();
 public Q_SLOTS:
@@ -40,7 +42,7 @@ public Q_SLOTS:
     void setScreenOrientation(ScreenOrientation::Orientation orientation);
     void onRecvObserve(const QString message, const QVariant data);
     void setSearchEngine(const QString engine) {/*FIXME*/}
-    QString searchEngine() const {return m_searchEngine;}
+    QString searchEngine() const {return mSearchEngine;}
 
 private:
 
@@ -54,9 +56,9 @@ protected:
     QMozContext * MozContext;
 
 private:
-    QString m_language;
-    ScreenOrientation::Orientation m_orientation;
-    QString m_searchEngine;
+    QString mLanguage;
+    ScreenOrientation::Orientation mOrientation;
+    QString mSearchEngine;
 };
 
 #endif // SETTINGS_H

@@ -7,8 +7,8 @@ Settings* settingsInstance = 0;
 
 Settings::Settings(QObject *parent) :
     QSettings(QString("Microbe"), QString("Microbe"), parent),
-    m_language("en"),
-    m_orientation(ScreenOrientation::Automatic)
+    mLanguage("en"),
+    mOrientation(ScreenOrientation::Automatic)
 {
     if (!settingsInstance) {
         settingsInstance = this;
@@ -42,14 +42,14 @@ void Settings::saveSettings() {
 
 void Settings::setLanguage(const QString &lang) {
     if (lang != this->language()) {
-        m_language = lang;
+        mLanguage = lang;
         Q_EMIT languageChanged(lang);
     }
 }
 
 void Settings::setScreenOrientation(ScreenOrientation::Orientation orientation) {
     if (orientation != this->screenOrientation()) {
-        m_orientation = orientation;
+        mOrientation = orientation;
         Q_EMIT screenOrientationChanged(orientation);
     }
 }
@@ -73,7 +73,7 @@ void Settings::onRecvObserve(const QString message, const QVariant data)
             QVariant engine = datamap["defaultEngine"];
             if (!engine.isNull())
             {
-                m_searchEngine = engine.toString();
+                mSearchEngine = engine.toString();
             }
         }
         else if (msg == "pluginslist")

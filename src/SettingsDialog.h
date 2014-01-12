@@ -1,21 +1,43 @@
 #ifndef SETTINGSDIALOG_H
 #define SETTINGSDIALOG_H
 
-#include <QBoxLayout>
-#include <QMaemo5ValueButton>
-
 #include "dialogues/AbstractDialog.h"
 #include "Settings.h"
+
+class LanguageSelector;
+class MemoryCacheSizeSelector;
+class ScreenOrientationSelector;
+
+class QDialogButtonBox;
+class QGridLayout;
+class QPushButton;
+class QVBoxLayout;
+class QMaemo5ValueButton;
 
 class SettingsDialog : public AbstractDialog
 {
     Q_OBJECT
 public:
     explicit SettingsDialog(QWidget *parent = 0);
+
+private:
+    void setLandscapeLayout();
+    void setPortraitLayout();
+    void loadSettings();
+
 protected:
-    QVBoxLayout * mainLayout;
-    QMaemo5ValueButton * searchEngineButton;
-    Settings * m_settings;
+    QDialogButtonBox* mButtonBox;
+    QPushButton* mSaveButton;
+    QVBoxLayout* mMainLayout;
+    QGridLayout* mGrid;
+    Settings* mSettings;
+    
+    LanguageSelector* mLanguageSelector;
+    MemoryCacheSizeSelector* mMemoryCacheSizeSelector;
+    ScreenOrientationSelector* mOrientationSelector;
+   
+    QMaemo5ValueButton* searchEngineButton;
+    
 
 };
 

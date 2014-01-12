@@ -21,6 +21,21 @@ private:
     Qt::Alignment m_textAlignment;
 };
 
+class LanguageModel : public SelectionModel
+{
+    Q_OBJECT
+
+    Q_PROPERTY(int count
+               READ rowCount
+               NOTIFY countChanged)
+
+public:
+    explicit LanguageModel(QObject *parent = 0);
+
+Q_SIGNALS:
+    void countChanged(int count);
+};
+
 class MemoryCacheSizeModel : public SelectionModel
 {
     Q_OBJECT
