@@ -18,19 +18,20 @@ public Q_SLOTS:
     void toggleFullScreen();
 
 private Q_SLOTS:
+    void newWindow();
     void onTitleChanged();
     void showSettingsDialog();
     void showAboutDialog();
     void showAddBookmarkDialog();
     void showBookmarksWindow();
     void showHistory();
-    void stopLoading();
 
 private:
     void setLandscapeLayout();
     void setPortraitLayout();
 
 private:
+    QAction *m_newWindowAction;
     QAction *m_settingsAction;
     QAction *m_aboutAction;
     QAction *m_fullScreenAction;

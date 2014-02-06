@@ -3,7 +3,7 @@
 #include "BrowserView.h"
 #include "NavigationToolBar.h"
 //#include "aboutdialog.h"
-//#include "settingsdialog.h"
+#include "SettingsDialog.h"
 //#include "../base/windowstack.h"
 #include "Settings.h"
 #include <QAction>
@@ -14,11 +14,11 @@
 #include <QGraphicsScene>
 #include <QGLWidget>
 #include "qtmozembed/qgraphicsmozview.h"
-
-#include "SettingsDialog.h"
+#include "qtmozembed/qmozcontext.h"
 
 BrowserWindow::BrowserWindow(const QString& url, QWidget *parent) :
     StackedWindow(parent),
+    m_newWindowAction(this->menuBar()->addAction(tr("New Window"), this, SLOT(newWindow()))),
     m_settingsAction(this->menuBar()->addAction(tr("Settings"), this, SLOT(showSettingsDialog()))),
     m_aboutAction(this->menuBar()->addAction(tr("About"), this, SLOT(showAboutDialog()))),
     m_fullscreen(false)
@@ -45,6 +45,10 @@ void BrowserWindow::setPortraitLayout() {
     mNavigationBar->setPortraitLayout();
 }
 
+void BrowserWindow::newWindow() {
+    QMozContext::GetInstance()->createView("about:blank", 0);
+}
+
 void BrowserWindow::showSettingsDialog() {
     SettingsDialog *dialog = new SettingsDialog(this);
     dialog->open();
@@ -67,11 +71,6 @@ void BrowserWindow::showBookmarksWindow() {
 }
 
 void BrowserWindow::showHistory() {
-//    BookmarksWindow *window = new BookmarksWindow(this);
-//    window->show();
-}
-
-void BrowserWindow::stopLoading() {
 //    BookmarksWindow *window = new BookmarksWindow(this);
 //    window->show();
 }
