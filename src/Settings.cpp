@@ -60,7 +60,6 @@ void Settings::onRecvObserve(const QString message, const QVariant data)
     qDebug() << "==========================================================";
     qDebug() << datamap;
     qDebug() << "==========================================================";
-//    abort();
     if (message == "embed:prefs")
     {
         //TODO what now?

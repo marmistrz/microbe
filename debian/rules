@@ -32,13 +32,14 @@ build-stamp: configure-stamp
 
 	touch $@
 
-clean: 
+clean:
 	dh_testdir
 	dh_testroot
+	qmake PREFIX=/usr
 	rm -f build-stamp configure-stamp
 
 	# Add here commands to clean up after the build process.
-	#$(MAKE) clean
+	$(MAKE) distclean
 
 	dh_clean 
 

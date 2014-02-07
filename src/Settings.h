@@ -59,6 +59,7 @@ private:
     QString mLanguage;
     ScreenOrientation::Orientation mOrientation;
     QString mSearchEngine;
+    QStringList m_availableSearchEngines;
 };
 
 #endif // SETTINGS_H
