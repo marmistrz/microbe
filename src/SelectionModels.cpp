@@ -1,4 +1,7 @@
 #include "SelectionModels.h"
+#include <QFile>
+#include <QVariantMap>
+#include <qjson/parser.h>
 
 SelectionModel::SelectionModel(QObject *parent) :
     QStandardItemModel(parent),
@@ -91,6 +94,29 @@ CookieActionModel::CookieActionModel(QObject *parent) :
     this->addItem(tr("Always"), 0);
     this->addItem(tr("Ask first"), 1);
     this->addItem(tr("Never"), 2);
+
+    Q_EMIT countChanged(this->rowCount());
+}
+
+SearchEngineModel::SearchEngineModel(QObject *parent) :
+    SelectionModel(parent)
+{
+    QFile pluginlist("~/.mozilla/mozembed/search.json");
+    pluginlist.open(QIODevice::ReadOnly | QIODevice::Text);
+    
+    QByteArray json = pluginlist.readAll();
+    
+    QJson::Parser parser;
+    bool ok;
+    QVariantMap result = parser.parse(json, &ok);
+    
+    //foreach (QVariant plugin, result["engines"].toList())
+    //{
+    //    QVariantMap engine = plugin.toMap();
+    //    qDebug() << "\t-" << plugin.toString();
+    //}
+    
+    //this->addItem(tr("Always"), 0);
 
     Q_EMIT countChanged(this->rowCount());
 }

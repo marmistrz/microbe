@@ -111,4 +111,21 @@ Q_SIGNALS:
     void countChanged(int count);
 };
 
+class SearchEngineModel : public SelectionModel
+{
+    Q_OBJECT
+
+    Q_PROPERTY(int count
+               READ rowCount
+               NOTIFY countChanged)
+
+public:
+    explicit SearchEngineModel(QObject *parent = 0);
+
+Q_SIGNALS:
+    void countChanged(int count);
+};
+
+
+
 #endif // SELECTIONMODELS_H
