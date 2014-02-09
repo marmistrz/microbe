@@ -238,6 +238,8 @@ QMozContext::sendObserve(const QString& aTopic, const QVariant& variant)
     QByteArray array = doc.toJson();
 #endif
 
+    qDebug() << QString(array);
+
     d->mApp->SendObserve(aTopic.toUtf8().data(), (const PRUnichar*)QString(array).constData());
 }
 

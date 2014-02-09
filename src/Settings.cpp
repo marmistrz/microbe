@@ -16,6 +16,19 @@ Settings::Settings(QObject *parent) :
 
     MozContext = QMozContext::GetInstance();
     connect(MozContext, SIGNAL(recvObserve(QString,QVariant)), this, SLOT(onRecvObserve(QString,QVariant)));
+
+    QVariantMap sendObserveArg;
+    sendObserveArg["msg"] = QString("getPrefList");
+    QStringList prefsList;
+    prefsList << "general.useragent.override" <<
+                 "browser.zoom.reflowOnZoom" <<
+                 "browser.zoom.reflowMobilePages" <<
+                 "gfx.azpc.vertical_scroll_lock_ratio" <<
+                 "gfx.azpc.horizontal_scroll_lock_ratio" <<
+                 "gfx.azpc.touch_start_tolerance" <<
+                 "ui.click_hold_context_menus.delay";
+    sendObserveArg["prefs"] = prefsList;
+    MozContext->sendObserve("embedui:prefs", sendObserveArg);
 }
 
 Settings::~Settings() {
