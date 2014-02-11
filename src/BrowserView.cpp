@@ -1,6 +1,8 @@
 #include "BrowserView.h"
 #include "dialogues/AlertDialog.h"
+#include "dialogues/ConfirmationDialog.h"
 #include <QGLWidget>
+#include <QVariantMap>
 #include <QDebug>
 
 #include <qjson/serializer.h>
@@ -92,7 +94,26 @@ void BrowserView::onRecvAsyncMessage(const QString message, const QVariant data)
     {
         qDebug() << "onAlert: title: " << tmp["title"].toString() << ", msg: " << tmp["text"].toString() << ", winid: " << tmp["winid"].toString();
         AlertDialog* alertDlg = new AlertDialog(tmp["title"].toString(), tmp["text"].toString(), this);
-        alertDlg->exec();
+        int res = alertDlg->exec();
+        qDebug() << "Alert retval: " << res;
+        QVariantMap message;
+        message.insert("winid", tmp["winid"]);
+        message.insert("checkval", 0);
+        message.insert("accepted", res);
+        mMozView.sendAsyncMessage("alertresponse", message);
+    }
+
+    if(message == "embed:confirm")
+    {
+        qDebug() << "onConfirm: title: " << tmp["title"].toString() << ", msg: " << tmp["text"].toString() << ", winid: " << tmp["winid"].toString();
+        ConfirmationDialog* confirmDlg = new ConfirmationDialog(tmp["title"].toString(), tmp["text"].toString(), this);
+        int res = confirmDlg->exec();
+        qDebug() << "Confirm retval: " << res;
+        QVariantMap message;
+        message.insert("winid", tmp["winid"]);
+        message.insert("checkval", 0);
+        message.insert("accepted", res);
+        mMozView.sendAsyncMessage("confirmresponse", message);
     }
 }
 

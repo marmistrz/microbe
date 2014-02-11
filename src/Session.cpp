@@ -11,6 +11,7 @@
 #include <QNetworkConfigurationManager>
 #include <QNetworkAccessManager>
 #include <QTimer>
+#include <QVariantMap>
 
 Session* sessionInstance = 0;
 
@@ -84,5 +85,17 @@ void Session::onInitialized()
     QStringList observers;
     observers << "embed:download" << "embed:prefs" << "embed:allprefs" << "clipboard:setdata" << "embed:logger" << "embed:search";
     m_context->addObservers(observers);
+    
+    qDebug("Adding search plugins");
+    QVariantMap message;
+    message.insert("msg", "loadxml");
+    message.insert("uri", "chrome://embedlite/content/bing.xml");
+    message.insert("confirm", false);
+    m_context->sendObserve("embedui:search", message);
+    message["uri"] = "chrome://embedlite/content/google.xml";
+    m_context->sendObserve("embedui:search", message);
+    message["uri"] = "chrome://embedlite/content/yahoo.xml";
+    m_context->sendObserve("embedui:search", message);
+    
 }
 
